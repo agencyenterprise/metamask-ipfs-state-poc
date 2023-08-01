@@ -1,17 +1,19 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
 import {
   connectSnap,
   getSnap,
-  sendHello,
+  sendGetState,
+  sendRefreshState,
+  sendSaveState,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
   ReconnectButton,
-  SendHelloButton,
+  Button,
   Card,
 } from '../components';
 
@@ -73,6 +75,14 @@ const ErrorMessage = styled.div`
 const Index = () => {
   const [state, dispatch] = useContext(MetaMaskContext);
 
+  // Refresh state on launch. Since this is the dapp, this should happen on the snap side to make
+  // sure it always uses the latest state, but this is just an example.
+  useEffect(() => {
+    if (state.installedSnap) {
+      sendRefreshState();
+    }
+  }, [state.installedSnap]);
+
   const handleConnectClick = async () => {
     try {
       await connectSnap();
@@ -88,9 +98,20 @@ const Index = () => {
     }
   };
 
-  const handleSendHelloClick = async () => {
+  const handleGetStateClick = async () => {
     try {
-      await sendHello();
+      const result = await sendGetState();
+      console.log(result);
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleSaveStateClick = async () => {
+    try {
+      const state = { timestamp: new Date().toISOString() };
+      await sendSaveState(state);
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
@@ -132,6 +153,7 @@ const Index = () => {
                 />
               ),
             }}
+            fullWidth
             disabled={!state.isFlask}
           />
         )}
@@ -148,19 +170,42 @@ const Index = () => {
                 />
               ),
             }}
+            fullWidth
             disabled={!state.installedSnap}
           />
         )}
         <Card
           content={{
-            title: 'Send Hello message',
+            title: 'Get persisted state',
             description:
-              'Display a custom message within a confirmation screen in MetaMask.',
+              'Get persisted state from the snap and log to the console.',
             button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
+              <Button
+                onClick={handleGetStateClick}
                 disabled={!state.installedSnap}
-              />
+              >
+                Send
+              </Button>
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            state.isFlask &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Persisted state',
+            description: 'Persist a mocked state in the snap and IPFS.',
+            button: (
+              <Button
+                onClick={handleSaveStateClick}
+                disabled={!state.installedSnap}
+              >
+                Send
+              </Button>
             ),
           }}
           disabled={!state.installedSnap}

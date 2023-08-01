@@ -11,4 +11,7 @@ module.exports = {
   ],
 
   ignorePatterns: ['!.eslintrc.js', 'build/'],
+  rules: {
+    '@typescript-eslint/no-shadow': 'off',
+  },
 };

@@ -7,12 +7,12 @@
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "NVk35LjM2vjAdn+DSlYe0opRELOIFexHMmQA5VESr1c=",
+    "shasum": "rY93I9KxuKQEBx9gl8WNk2WH1LjG8YxonpEZ6GUfTDs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "metamask-ipfs-state-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }

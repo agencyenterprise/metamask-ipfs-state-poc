@@ -8,7 +8,21 @@ const IPFS_SNAP_ID = 'local:http://localhost:8080';
  * @returns Persisted state or null if not found.
  */
 export async function getState(): Promise<State | null> {
-  return null;
+  try {
+    const output = await snap.request({
+      method: 'wallet_invokeSnap',
+      params: {
+        snapId: IPFS_SNAP_ID,
+        request: {
+          method: 'get',
+        },
+      },
+    });
+
+    return (output as State) ?? { found: false };
+  } catch (error) {
+    return { message: error.message };
+  }
 }
 
 /**

@@ -112,6 +112,17 @@ const Index = () => {
     try {
       const state = { timestamp: new Date().toISOString() };
       await sendSaveState(state);
+      console.log('Successfully saved state 🚀');
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: MetamaskActions.SetError, payload: e });
+    }
+  };
+
+  const handleRefreshStateClick = async () => {
+    try {
+      await sendRefreshState();
+      console.log('Successfully refreshed state ✅');
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });
@@ -197,11 +208,31 @@ const Index = () => {
         />
         <Card
           content={{
-            title: 'Persisted state',
+            title: 'Persist state',
             description: 'Persist a mocked state in the snap and IPFS.',
             button: (
               <Button
                 onClick={handleSaveStateClick}
+                disabled={!state.installedSnap}
+              >
+                Send
+              </Button>
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            state.isFlask &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Refresh state',
+            description: 'Manually refresh state persisted on IPFS.',
+            button: (
+              <Button
+                onClick={handleRefreshStateClick}
                 disabled={!state.installedSnap}
               >
                 Send

@@ -12,7 +12,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       return handleSaveState(request.params as State);
 
     case 'refresh_state':
-      return '';
+      return handleRefreshState();
 
     default:
       throw new Error('Method not found.');

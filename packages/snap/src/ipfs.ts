@@ -1,6 +1,7 @@
 import type { State } from './types';
 
-const IPFS_SNAP_ID = 'local:http://localhost:8080';
+// const IPFS_SNAP_ID = 'local:http://localhost:8080';
+const IPFS_SNAP_ID = 'npm:metamask-ipfs-sync-snap';
 
 /**
  * Get saved state from IPFS snap.

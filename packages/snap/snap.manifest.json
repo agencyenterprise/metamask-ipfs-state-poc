@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple state management snap integrating with IPFS snap",
   "proposedName": "State Management",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "rY93I9KxuKQEBx9gl8WNk2WH1LjG8YxonpEZ6GUfTDs=",
+    "shasum": "AhCcjZxG+0b730geED54zbM2mCubCUQT7jYjWlb5wcs=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

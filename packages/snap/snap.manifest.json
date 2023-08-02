@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple state management snap integrating with IPFS snap",
   "proposedName": "State Management",
   "repository": {
@@ -24,7 +24,7 @@
       "snaps": true
     },
     "wallet_snap": {
-      "local:http://localhost:8080": {}
+      "npm:metamask-ipfs-sync-snap": {}
     }
   },
   "manifestVersion": "0.1"
